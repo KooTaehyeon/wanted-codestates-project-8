@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ListBack from '../components/ListBack';
-
 import ListBox from '../components/ListBox';
+import { getItems, setItems } from '../util/LocalStorage';
 const Lists = ({}) => {
+  const [localData, setLocalData] = useState(getItems('item'));
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]);
   const [number, setNumber] = useState(Number(1));
@@ -30,6 +31,10 @@ const Lists = ({}) => {
   useEffect(() => {
     defaultClient();
   }, [number]);
+
+  useEffect(() => {
+    setItems(localData);
+  }, [localData]);
 
   //무한 스크롤
   const _infiniteScroll = useCallback(() => {
@@ -56,8 +61,8 @@ const Lists = ({}) => {
     window.addEventListener('scroll', _infiniteScroll, true);
     return () => window.removeEventListener('scroll', _infiniteScroll, true);
   }, [_infiniteScroll]);
-
   console.log(data);
+  console.log(localData, '저장');
   return (
     <>
       <Link to='/'>
@@ -68,6 +73,8 @@ const Lists = ({}) => {
           data.map((item, i) => {
             return (
               <ListBox
+                localData={localData}
+                setLocalData={setLocalData}
                 key={i}
                 item={item}
                 title={item.fcNm}
