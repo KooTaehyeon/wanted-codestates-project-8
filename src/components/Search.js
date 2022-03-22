@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Search = () => {
+const Search = (homeData, setHomeData) => {
   const options = [
-    { value: 'name', label: '이름', key: '휴양림_명칭' },
-    { value: 'address', label: '주소', key: '휴양림_주소' },
+    { value: 'name', label: '이름', key: 'title' },
+    { value: 'address', label: '주소', key: 'addr' },
     { value: 'memo', label: '메모', key: 'memo' },
   ];
   // 셀럭트 옵션 담는 정보
@@ -15,20 +15,28 @@ const Search = () => {
     setSelectedOption(options[Number(value)]);
   };
   /// 셀렉트존
-  const [inputText, setInputText] = useState(false); //input 값 있는지 확인해주는 상태 값
   const [inputValue, setInputValue] = useState(''); // input 값 상태
   //인풋
 
   const inputChange = (e) => {
     // input값 바꿔주는 이벤트
     setInputValue(e.target.value);
-    setInputText(true);
   };
 
   const textRemove = () => {
     // input 값 지우는 이벤트
     setInputValue('');
   };
+
+  // 검색 필터
+  useEffect(() => {
+    if (selectedOption) {
+      console.log('d');
+      const data = homeData.filter((item) => item.fcNm === inputValue);
+      setHomeData(data);
+    }
+  }, [inputValue]);
+  console.log(selectedOption);
   return (
     <Box>
       <SelectBox onChange={changeSelectValue}>

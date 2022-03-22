@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Search from '../components/Search';
 import ListPlus from '../components/ListPlus';
 import { Link } from 'react-router-dom';
-const Home = (props) => {
+import { getItems } from '../util/LocalStorage';
+const Home = () => {
+  const [homeData, setHomeData] = useState([]);
+  useEffect(() => {
+    setHomeData(getItems('item'));
+  }, []);
+
   return (
     <>
-      <Search></Search>
+      <Search homeData={homeData} setHomeData={setHomeData} />
       <ListUl>
-        <ListLi>
-          <p>title</p>
-          <p>address</p>
-          <p>tel</p>
-          <Messsage>~~~</Messsage>
-        </ListLi>
+        {homeData ? (
+          homeData.map((item, i) => {
+            return (
+              <ListLi key={i}>
+                <p>{item.fcNm}</p>
+                <p>{item.fcAddr}</p>
+                <p>{item.ref1}</p>
+                <Messsage>{item.contents}</Messsage>
+              </ListLi>
+            );
+          })
+        ) : (
+          <div>저장된 데이터가 없습니다</div>
+        )}
       </ListUl>
       <Link to='/List'>
         <ListPlus />
@@ -21,7 +35,11 @@ const Home = (props) => {
     </>
   );
 };
-const ListUl = styled.ul``;
+const ListUl = styled.ul`
+  div {
+    text-align: center;
+  }
+`;
 const ListLi = styled.li`
   max-width: 388px;
   border-radius: 6px;
@@ -52,4 +70,5 @@ const Messsage = styled.p`
   white-space: nowrap;
   overflow: hidden;
 `;
+
 export default Home;
