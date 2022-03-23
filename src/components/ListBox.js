@@ -14,11 +14,15 @@ const ListBox = ({
   setHomeData,
 }) => {
   const [modalCk, setModelCk] = useState(false);
+  const [istrue, setIstrue] = useState(false);
   const modelClick = (e) => {
     if (!modalCk) {
       setModelCk(true);
     } else {
       setModelCk(false);
+    }
+    if (memo > 1) {
+      setIstrue(true);
     }
   };
   return (
@@ -42,6 +46,7 @@ const ListBox = ({
           addr={addr}
           tel={tel}
           memo={memo}
+          istrue={istrue}
         />
       ) : null}
     </>

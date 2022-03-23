@@ -16,6 +16,7 @@ const Modal = ({
   memo,
   homeData,
   setHomeData,
+  istrue,
 }) => {
   const [editMessage, setEditMessage] = useState(memo);
 
@@ -27,7 +28,8 @@ const Modal = ({
       setModelCk(false);
     }
   };
-  const save = () => {
+  // 저장기능
+  const save = (e) => {
     //모달  닫기
     if (modalCk === true) {
       setModelCk(false);
@@ -39,6 +41,7 @@ const Modal = ({
       setLocalData([{ ...item, contents: editMessage }]);
     }
   };
+  //
   const updated = () => {
     //모달  닫기
     if (modalCk === true) {
@@ -51,6 +54,7 @@ const Modal = ({
     }
   };
   console.log(editMessage.length);
+  console.log(istrue);
   return (
     <>
       <Bg onClick={onclick}> </Bg>
@@ -78,10 +82,10 @@ const Modal = ({
               placeholder='내용을 입력해주세요'
               onChange={MessageChnge}
             ></textarea>
-            {editMessage.length > 1 ? (
+            {istrue === true ? (
               <>
                 <div onClick={updated}>수정하기</div>
-                <div onClick={save}>저장하기</div>
+                <div>삭제하기</div>
               </>
             ) : (
               <div onClick={save}>저장하기</div>
