@@ -56,7 +56,7 @@ const Lists = ({}) => {
       setData([...data, ...result]);
     }
   }, [data]);
-
+  console.log(number);
   useEffect(() => {
     window.addEventListener('scroll', _infiniteScroll, true);
     return () => window.removeEventListener('scroll', _infiniteScroll, true);

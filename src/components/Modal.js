@@ -36,11 +36,6 @@ const Modal = ({
     }
   };
 
-  // useEffect(() => {
-  //   setItems(localData);
-  //   console.log(localData);
-  // }, [localData]);
-
   return (
     <>
       <Bg onClick={onclick}> </Bg>

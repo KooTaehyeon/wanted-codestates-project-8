@@ -4,15 +4,19 @@ import Search from '../components/Search';
 import ListPlus from '../components/ListPlus';
 import { Link } from 'react-router-dom';
 import { getItems } from '../util/LocalStorage';
+import { useRecoilState } from 'recoil';
+import { DataState } from '../atom';
 const Home = () => {
+  const [homeTrue, setHomeTrue] = useRecoilState(DataState);
   const [homeData, setHomeData] = useState([]);
+  console.log(homeTrue);
   useEffect(() => {
     setHomeData(getItems('item'));
-  }, []);
-
+  }, [homeTrue]);
+  console.log('홈', homeData);
   return (
     <>
-      <Search homeData={homeData} setHomeData={setHomeData} />
+      <Search homeData={homeData} />
       <ListUl>
         {homeData ? (
           homeData.map((item, i) => {
