@@ -1,7 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
-const ListBox = ({ localData, setLocalData, item, title, addr, tel }) => {
+
+const ListBox = ({
+  localData,
+  setLocalData,
+  item,
+  title,
+  addr,
+  tel,
+  memo,
+  homeData,
+  setHomeData,
+}) => {
   const [modalCk, setModelCk] = useState(false);
   const modelClick = (e) => {
     if (!modalCk) {
@@ -16,18 +27,21 @@ const ListBox = ({ localData, setLocalData, item, title, addr, tel }) => {
         <p>{title}</p>
         <p>{addr}</p>
         <p>{tel}</p>
-        <Messsage></Messsage>
+        <Messsage>{memo}</Messsage>
       </ListLi>
       {modalCk ? (
         <Modal
           localData={localData}
           setLocalData={setLocalData}
+          setHomeData={setHomeData}
+          homeData={homeData}
           item={item}
           modalCk={modalCk}
           setModelCk={setModelCk}
           title={title}
           addr={addr}
           tel={tel}
+          memo={memo}
         />
       ) : null}
     </>

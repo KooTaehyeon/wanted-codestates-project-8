@@ -13,8 +13,11 @@ const Modal = ({
   title,
   addr,
   tel,
+  memo,
+  homeData,
+  setHomeData,
 }) => {
-  const [editMessage, setEditMessage] = useState('');
+  const [editMessage, setEditMessage] = useState(memo);
 
   const MessageChnge = (e) => {
     setEditMessage(e.target.value);
@@ -25,17 +28,29 @@ const Modal = ({
     }
   };
   const save = () => {
+    //모달  닫기
     if (modalCk === true) {
       setModelCk(false);
     }
-
+    // 메모 저장
     if (localData) {
       setLocalData([...localData, { ...item, contents: editMessage }]);
     } else {
       setLocalData([{ ...item, contents: editMessage }]);
     }
   };
-
+  const updated = () => {
+    //모달  닫기
+    if (modalCk === true) {
+      setModelCk(false);
+    }
+    // 메모 저장
+    if (homeData) {
+      console.log('이프');
+      setHomeData([{ ...item, contents: editMessage }]);
+    }
+  };
+  console.log(editMessage.length);
   return (
     <>
       <Bg onClick={onclick}> </Bg>
@@ -63,7 +78,14 @@ const Modal = ({
               placeholder='내용을 입력해주세요'
               onChange={MessageChnge}
             ></textarea>
-            <div onClick={save}>저장하기</div>
+            {editMessage.length > 1 ? (
+              <>
+                <div onClick={updated}>수정하기</div>
+                <div onClick={save}>저장하기</div>
+              </>
+            ) : (
+              <div onClick={save}>저장하기</div>
+            )}
           </li>
         </ul>
       </ModalBox>
@@ -93,12 +115,18 @@ const ModalBox = styled.div`
   background-color: #fff;
   box-sizing: border-box;
   z-index: 10;
+  text-align: center;
   div {
-    margin-top: 10px;
+    margin: 15px 15px 0px 15px;
     text-align: center;
     font-weight: bold;
     font-size: 18px;
     cursor: pointer;
+    display: inline-box;
+    border: 1px solid blue;
+    padding: 10px;
+    background: blue;
+    color: #fff;
   }
   li {
     margin: 20px 0;
@@ -123,6 +151,7 @@ const ModalBox = styled.div`
     border-radius: 6px;
     box-sizing: border-box;
     resize: none;
+    overflow: hidden;
     ::placeholder {
       color: gray;
     }
