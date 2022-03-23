@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom';
 import { getItems } from '../util/LocalStorage';
 import { useRecoilState } from 'recoil';
 import { DataState } from '../atom';
+import Modal from '../components/Modal';
+import ListBox from '../components/ListBox';
 const Home = () => {
   const [homeTrue, setHomeTrue] = useRecoilState(DataState);
   const [homeData, setHomeData] = useState([]);
@@ -14,7 +16,7 @@ const Home = () => {
   useEffect(() => {
     setHomeData(getItems('item'));
   }, [homeTrue]);
-
+  console.log(homeData, 'home');
   return (
     <>
       <Search />
@@ -22,12 +24,24 @@ const Home = () => {
         {homeData ? (
           homeData.map((item, i) => {
             return (
-              <ListLi key={i}>
-                <p>{item.fcNm}</p>
-                <p>{item.fcAddr}</p>
-                <p>{item.ref1}</p>
-                <Messsage>{item.contents}</Messsage>
-              </ListLi>
+              <ListBox
+                homeData={homeData}
+                setHomeData={setHomeData}
+                localData={homeData}
+                setLocalData={setHomeTrue}
+                key={i}
+                item={item}
+                title={item.fcNm}
+                addr={item.fcAddr}
+                tel={item.ref1}
+                memo={item.contents}
+              />
+              // <ListLi key={i} onClick={modelClick}>
+              //   <p>{item.fcNm}</p>
+              //   <p>{item.fcAddr}</p>
+              //   <p>{item.ref1}</p>
+              //   <Messsage>{item.contents}</Messsage>
+              // </ListLi>
             );
           })
         ) : (

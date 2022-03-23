@@ -31,10 +31,9 @@ const Lists = ({}) => {
   useEffect(() => {
     defaultClient();
   }, [number]);
-
-  useEffect(() => {
+  setTimeout(() => {
     setItems(localData);
-  }, [localData]);
+  }, localData);
 
   //무한 스크롤
   const _infiniteScroll = useCallback(() => {
@@ -61,8 +60,7 @@ const Lists = ({}) => {
     window.addEventListener('scroll', _infiniteScroll, true);
     return () => window.removeEventListener('scroll', _infiniteScroll, true);
   }, [_infiniteScroll]);
-  console.log(data);
-  console.log(localData, '저장');
+
   return (
     <>
       <Link to='/'>
@@ -80,6 +78,7 @@ const Lists = ({}) => {
                 title={item.fcNm}
                 addr={item.fcAddr}
                 tel={item.ref1}
+                memo={item.contents}
               />
             );
           })}

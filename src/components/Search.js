@@ -31,18 +31,20 @@ const Search = () => {
   const onKey = (e) => {
     if (e.key === 'Enter') {
       if (selectedOption.value === 'name') {
+        console.log('아');
         const data = searchData.filter((item) =>
           item.fcNm.includes(String(inputValue))
         );
         setSearchData(data);
       } else if (selectedOption.value === 'address') {
+        console.log('오냐');
         const data = searchData.filter((item) =>
-          item.fcNm.includes(String(inputValue))
+          item.fcAddr.includes(String(inputValue))
         );
         setSearchData(data);
-      } else if (selectedOption.value === 'address') {
+      } else if (selectedOption.value === 'memo') {
         const data = searchData.filter((item) =>
-          item.fcNm.includes(String(inputValue))
+          item.contents.includes(String(inputValue))
         );
         setSearchData(data);
       }
@@ -57,6 +59,7 @@ const Search = () => {
     // input 값 지우는 이벤트
     setInputValue('');
     setItems(reData);
+    setSearchData(getItems('item'));
     setHomeTrue(!homeTrue);
   };
   // 리셋(되돌리기)용 데이터
