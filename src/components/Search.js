@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-const Search = (homeData, setHomeData) => {
+import { getItems, setItems } from '../util/LocalStorage';
+import { useRecoilState } from 'recoil';
+import { DataState } from '../atom';
+const Search = () => {
   const options = [
     { value: 'name', label: '이름', key: 'title' },
     { value: 'address', label: '주소', key: 'addr' },
     { value: 'memo', label: '메모', key: 'memo' },
   ];
+
   // 셀럭트 옵션 담는 정보
   const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [searchData, setSearchData] = useState(getItems('item'));
+  const [reData, setReData] = useState([]);
+  const [homeTrue, setHomeTrue] = useRecoilState(DataState);
+
   // 셀렉트 옵션 담는걸 바꿔주는 함수
   const changeSelectValue = (e) => {
     const { value } = e.target;
@@ -16,27 +23,50 @@ const Search = (homeData, setHomeData) => {
   };
   /// 셀렉트존
   const [inputValue, setInputValue] = useState(''); // input 값 상태
-  //인풋
 
   const inputChange = (e) => {
     // input값 바꿔주는 이벤트
     setInputValue(e.target.value);
   };
-
-  const textRemove = () => {
+  const onKey = (e) => {
+    if (e.key === 'Enter') {
+      if (selectedOption.value === 'name') {
+        const data = searchData.filter((item) =>
+          item.fcNm.includes(String(inputValue))
+        );
+        setSearchData(data);
+      } else if (selectedOption.value === 'address') {
+        const data = searchData.filter((item) =>
+          item.fcNm.includes(String(inputValue))
+        );
+        setSearchData(data);
+      } else if (selectedOption.value === 'address') {
+        const data = searchData.filter((item) =>
+          item.fcNm.includes(String(inputValue))
+        );
+        setSearchData(data);
+      }
+    }
+    setHomeTrue(!homeTrue);
+  };
+  // 필터용
+  setTimeout(() => {
+    setItems(searchData);
+  }, searchData);
+  const ReSet = () => {
     // input 값 지우는 이벤트
     setInputValue('');
+    setItems(reData);
+    setHomeTrue(!homeTrue);
   };
-
-  // 검색 필터
+  // 리셋(되돌리기)용 데이터
   useEffect(() => {
-    if (selectedOption) {
-      console.log('d');
-      const data = homeData.filter((item) => item.fcNm === inputValue);
-      setHomeData(data);
-    }
-  }, [inputValue]);
-  console.log(selectedOption);
+    setReData(searchData);
+  }, []);
+
+  console.log(searchData);
+  console.log(reData, '리셋용');
+
   return (
     <Box>
       <SelectBox onChange={changeSelectValue}>
@@ -46,14 +76,17 @@ const Search = (homeData, setHomeData) => {
           </option>
         ))}
       </SelectBox>
-      <Froms>
+      <Froms onSubmit={(e) => e.preventDefault()}>
         {' '}
         <InputBox
           placeholder='검색어를 입력하세요.'
+          id='search'
+          type='text'
           onChange={inputChange}
           value={inputValue}
+          onKeyPress={onKey}
         />
-        <InputRemove onClick={textRemove}>
+        <InputRemove onClick={ReSet}>
           {' '}
           <i className='fas fa-undo'></i>
         </InputRemove>

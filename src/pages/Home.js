@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Search from '../components/Search';
 import ListPlus from '../components/ListPlus';
@@ -9,14 +9,15 @@ import { DataState } from '../atom';
 const Home = () => {
   const [homeTrue, setHomeTrue] = useRecoilState(DataState);
   const [homeData, setHomeData] = useState([]);
+
   console.log(homeTrue);
   useEffect(() => {
     setHomeData(getItems('item'));
   }, [homeTrue]);
-  console.log('홈', homeData);
+
   return (
     <>
-      <Search homeData={homeData} />
+      <Search />
       <ListUl>
         {homeData ? (
           homeData.map((item, i) => {
