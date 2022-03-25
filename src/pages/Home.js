@@ -1,17 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Search from '../components/Search';
 import ListPlus from '../components/ListPlus';
 import { Link } from 'react-router-dom';
 import { getItems, setItems } from '../util/LocalStorage';
-import { useRecoilState } from 'recoil';
-import { DataState, modalDatas } from '../atom';
-import Modal from '../components/Modal';
 import ListBox from '../components/ListBox';
+
 const Home = () => {
-  const [homeTrue, setHomeTrue] = useRecoilState(DataState);
   const [homeData, setHomeData] = useState([]);
-  const [modalData, setModalData] = useRecoilState(modalDatas);
 
   useEffect(() => {
     const test = getItems('item');
@@ -20,14 +15,91 @@ const Home = () => {
     } else {
       setHomeData([]);
     }
-  }, [modalData]);
-  console.log(modalData);
+  }, []);
 
-  console.log(homeData, 'home');
+  // 서치부분
+  const Search = () => {
+    const options = [
+      { value: 'name', label: '이름', key: 'title' },
+      { value: 'address', label: '주소', key: 'addr' },
+      { value: 'memo', label: '메모', key: 'memo' },
+    ];
+
+    // 셀럭트 옵션 담는 정보
+    const [selectedOption, setSelectedOption] = useState(options[0]);
+    const [searchData, setSearchData] = useState(getItems('item'));
+
+    // 셀렉트 옵션 담는걸 바꿔주는 함수
+    const changeSelectValue = (e) => {
+      const { value } = e.target;
+      setSelectedOption(options[Number(value)]);
+    };
+    /// 셀렉트존
+    const [inputValue, setInputValue] = useState(''); // input 값 상태
+
+    const inputChange = (e) => {
+      // input값 바꿔주는 이벤트
+      setInputValue(e.target.value);
+    };
+    const onKey = (e) => {
+      if (e.key === 'Enter') {
+        if (selectedOption.value === 'name') {
+          const data = homeData.filter((item) =>
+            item.fcNm.includes(String(inputValue))
+          );
+          setHomeData(data);
+        } else if (selectedOption.value === 'address') {
+          const data = homeData.filter((item) =>
+            item.fcAddr.includes(String(inputValue))
+          );
+          setHomeData(data);
+        } else if (selectedOption.value === 'memo') {
+          const data = homeData.filter((item) =>
+            item.contents.includes(String(inputValue))
+          );
+          setHomeData(data);
+        }
+      }
+    };
+    console.log(searchData, '서치');
+
+    const ReSet = () => {
+      // input 값 지우는 이벤트
+      setInputValue('');
+      setHomeData(getItems('item'));
+    };
+
+    return (
+      <Box>
+        <SelectBox onChange={changeSelectValue}>
+          {options.map(({ label }, idx) => (
+            <option value={idx} key={idx}>
+              {label}
+            </option>
+          ))}
+        </SelectBox>
+        <Froms onSubmit={(e) => e.preventDefault()}>
+          {' '}
+          <InputBox
+            placeholder='검색어를 입력하세요.'
+            id='search'
+            type='text'
+            onChange={inputChange}
+            value={inputValue}
+            onKeyPress={onKey}
+          />
+          <InputRemove onClick={ReSet}>
+            {' '}
+            <i className='fas fa-undo'></i>
+          </InputRemove>
+        </Froms>
+      </Box>
+    );
+  };
 
   return (
     <>
-      <Search homeData={homeData} />
+      <Search />
       <ListUl>
         {homeData ? (
           homeData.map((item, i) => {
@@ -38,12 +110,6 @@ const Home = () => {
                 key={i}
                 item={item}
               />
-              // <ListLi key={i} onClick={modelClick}>
-              //   <p>{item.fcNm}</p>
-              //   <p>{item.fcAddr}</p>
-              //   <p>{item.ref1}</p>
-              //   <Messsage>{item.contents}</Messsage>
-              // </ListLi>
             );
           })
         ) : (
@@ -61,35 +127,38 @@ const ListUl = styled.ul`
     text-align: center;
   }
 `;
-const ListLi = styled.li`
-  max-width: 388px;
-  border-radius: 6px;
-  padding: 21px;
-  margin: 20px auto;
-  box-shadow: rgb(140 141 146 / 25%) 3px 3px 8px 1px;
-  box-sizing: border-box;
-  color: rgb(0, 0, 0);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  & p {
-    line-height: 1.5;
-  }
-  & p:first-child {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 14px;
+
+const Box = styled.nav`
+  display: flex;
+  margin: 20px;
+  position: relative;
+`;
+const SelectBox = styled.select`
+  width: 88px;
+  height: 38px;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+`;
+const Froms = styled.form`
+  position: relative;
+  height: 36px;
+  width: 100%;
+  padding: 0px 10px;
+  border: 1px solid #d1d1d1;
+  border-radius: 5px;
+`;
+const InputBox = styled.input`
+  border: none;
+  width: 90%;
+  height: 34px;
+  &:focus {
+    outline: none;
   }
 `;
-const Messsage = styled.p`
-  display: inline-block;
-  max-width: 360px;
-  margin-top: 18px;
-  color: blue;
-  font-weight: bold;
-  font-size: 16px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+const InputRemove = styled.div`
+  padding-top: 5px;
+  float: right;
+  cursor: pointer;
 `;
 
 export default Home;
