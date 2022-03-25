@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { setItems } from '../util/LocalStorage';
 import { getItems } from '../util/LocalStorage';
+import Feedback from './Feedback';
+import { useRecoilState } from 'recoil';
+import { bool } from '../atoms';
 const Modal = ({
   modalCk,
   setModelCk,
@@ -9,11 +12,12 @@ const Modal = ({
   homeData,
   setHomeData,
   istrue,
+  setTextCk,
 }) => {
   const [editMessage, setEditMessage] = useState(item.text);
-
+  let textCk = 0;
   const [myDatas, setMyDatas] = useState([]);
-
+  const [feedCk, setFeadCks] = useRecoilState(bool);
   useEffect(() => {
     const data = getItems('item');
     if (data) {
@@ -32,6 +36,15 @@ const Modal = ({
 
   // 저장기능
   const clickE = (e) => {
+    // 빈값이면 리턴
+    if (!editMessage) {
+      setFeadCks(!feedCk);
+      setTimeout(() => {
+        console.log('실행');
+        setFeadCks(false);
+      }, 2000);
+      return;
+    }
     //모달  닫기
     if (e.target.innerText === '저장하기') {
       if (modalCk === true) {
@@ -50,6 +63,12 @@ const Modal = ({
         const saveData = [{ ...item, id: Date.now(), text: editMessage }];
         setItems(saveData);
       }
+      setTextCk(3);
+      setFeadCks(true);
+      setTimeout(() => {
+        console.log('실행');
+        setFeadCks(false);
+      }, 2000);
     }
     if (e.target.innerText === '수정하기') {
       if (homeData) {
@@ -70,6 +89,12 @@ const Modal = ({
         });
         setItems(updated);
         setModelCk(false);
+        setTextCk(1);
+        setFeadCks(true);
+        setTimeout(() => {
+          console.log('실행');
+          setFeadCks(false);
+        }, 2000);
       }
     }
     if (e.target.innerText === '삭제하기') {
@@ -79,6 +104,12 @@ const Modal = ({
         setItems(deleted);
         setModelCk(false);
         setHomeData(deleted);
+        setTextCk(2);
+        setFeadCks(true);
+        setTimeout(() => {
+          console.log('실행');
+          setFeadCks(false);
+        }, 2000);
       }
     }
   };
@@ -121,6 +152,7 @@ const Modal = ({
           </li>
         </ul>
       </ModalBox>
+      <Feedback textCk={textCk} feedCk={feedCk} />
     </>
   );
 };

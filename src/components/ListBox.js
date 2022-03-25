@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
 
-const ListBox = ({ item, homeData, setHomeData, setHomeTrue }) => {
+const ListBox = ({ item, homeData, setHomeData, setTextCk, setFeadCk }) => {
   const [modalCk, setModelCk] = useState(false);
   const [istrue, setIstrue] = useState(false);
 
@@ -26,12 +26,14 @@ const ListBox = ({ item, homeData, setHomeData, setHomeTrue }) => {
       </ListLi>
       {modalCk ? (
         <Modal
+          setTextCk={setTextCk}
           setHomeData={setHomeData}
           homeData={homeData}
           item={item}
           modalCk={modalCk}
           setModelCk={setModelCk}
           istrue={istrue}
+          setFeadCk={setFeadCk}
         />
       ) : null}
     </>
