@@ -4,7 +4,9 @@ import ListPlus from '../components/ListPlus';
 import { Link } from 'react-router-dom';
 import { getItems, setItems } from '../util/LocalStorage';
 import ListBox from '../components/ListBox';
-
+import Feedback from '../components/Feedback';
+import { useRecoilState } from 'recoil';
+import { bool } from '../atoms';
 const Home = () => {
   const [homeData, setHomeData] = useState([]);
 
@@ -96,7 +98,10 @@ const Home = () => {
       </Box>
     );
   };
-
+  //  피드백 박스
+  let [textCk, setTextCk] = useState(1);
+  const [feedCk, setFeadCks] = useRecoilState(bool);
+  console.log(textCk);
   return (
     <>
       <Search />
@@ -109,6 +114,7 @@ const Home = () => {
                 setHomeData={setHomeData}
                 key={i}
                 item={item}
+                setTextCk={setTextCk}
               />
             );
           })
@@ -119,6 +125,7 @@ const Home = () => {
       <Link to='/List'>
         <ListPlus />
       </Link>
+      <Feedback textCk={textCk} feedCk={feedCk} />
     </>
   );
 };
