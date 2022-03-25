@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { DataState } from '../atom';
+import { DataState, modalDatas } from '../atom';
 import { setItems } from '../util/LocalStorage';
 import { getItems } from '../util/LocalStorage';
 const Modal = ({
-  localData,
-  setLocalData,
   modalCk,
   setModelCk,
   item,
-  title,
-  addr,
-  tel,
-  memo,
   homeData,
   setHomeData,
   istrue,
 }) => {
-  const [editMessage, setEditMessage] = useState(memo);
+  const [editMessage, setEditMessage] = useState(item.text);
+  const [modalData, setModalData] = useRecoilState(modalDatas);
+  const [myDatas, setMyDatas] = useState([]);
+
+  useEffect(() => {
+    const data = getItems('item');
+    if (data) {
+      setMyDatas(data);
+    }
+  }, []);
 
   const MessageChnge = (e) => {
     setEditMessage(e.target.value);
@@ -35,12 +38,20 @@ const Modal = ({
       setModelCk(false);
     }
     // 메모 저장
-    if (localData) {
-      setLocalData([...localData, { ...item, contents: editMessage }]);
+    if (myDatas) {
+      console.log('home', myDatas);
+      const saveData = [
+        ...myDatas,
+        { ...item, id: Date.now(), text: editMessage },
+      ];
+      setItems(saveData);
     } else {
-      setLocalData([{ ...item, contents: editMessage }]);
+      console.log('home', myDatas);
+      const saveData = [{ ...item, id: Date.now(), text: editMessage }];
+      setItems(saveData);
     }
   };
+
   //
   const updated = () => {
     //모달  닫기
@@ -49,12 +60,63 @@ const Modal = ({
     }
     // 메모 저장
     if (homeData) {
-      console.log('이프');
-      setHomeData([{ ...item, contents: editMessage }]);
+      console.log(homeData);
+      console.log('item', item);
+      let indexData;
+      homeData.forEach((todo, index) => {
+        if (todo.id === item.id) {
+          //docs.google.com/spreadsheets/d/1hJjbzQQqeO2xVUTPw4lzf8Xs3OwSxcn9XDcsTbiWC0k/edit#gid=0t
+          vbhttps: indexData = index;
+        }
+      });
+      // const upDatadata = { ...item, contents: editMessage };
+      // const newDatas = [ ...homeData, homeData[indexData] ];
+      const allDatas = [...homeData];
+      // upDatadata[indexData] = { ...item, contents: editMessage };
+      const updated = allDatas.map((todo) => {
+        if (todo.id === item.id) {
+          todo.text = editMessage;
+          return todo;
+        }
+        return todo;
+      });
+      setItems(updated);
     }
   };
-  console.log(editMessage.length);
-  console.log(istrue);
+  const del = () => {
+    // //모달  닫기
+    // if (modalCk === true) {
+    //   setModelCk(false);
+    // }
+    // // 메모 저장
+    // if (homeData) {
+    //   console.log(homeData);
+    //   console.log('item', item);
+    //   let indexData;
+    //   homeData.forEach((todo, index) => {
+    //     if (todo.id === item.id) {
+    //       indexData = index;
+    //     }
+    //   });
+
+    //   const alldelData = [...homeData];
+
+    //   const deletedArr = alldelData.filter((todo) => todo.id !== item.id);
+    //   console.log(deletedArr);
+    //   setHomeData(deletedArr);
+    //   setItems(homeData);
+    // }
+    if (myDatas) {
+      const allDatas = getItems('item');
+      const deleted = allDatas.filter((todo) => todo.id !== item.id);
+      console.log('deleted', deleted);
+      setItems(deleted);
+      setModelCk(false);
+      // setMyDatas(deleted);
+      setHomeData(deleted);
+    }
+  };
+
   return (
     <>
       <Bg onClick={onclick}> </Bg>
@@ -62,15 +124,15 @@ const Modal = ({
         <ul>
           <li>
             <label htmlFor='title'>이름</label>
-            <p>{title}</p>
+            <p>{item.fcNm}</p>
           </li>
           <li>
             <label htmlFor='address'>주소</label>
-            <p>{addr}</p>
+            <p>{item.fcAddr}</p>
           </li>
           <li>
             <label htmlFor='tel'>연락처</label>
-            <p>{tel}</p>
+            <p>{item.ref1}</p>
           </li>
           <li>
             <label htmlFor='massage'>메모</label>
@@ -85,7 +147,7 @@ const Modal = ({
             {istrue === true ? (
               <>
                 <div onClick={updated}>수정하기</div>
-                <div>삭제하기</div>
+                <div onClick={del}>삭제하기</div>
               </>
             ) : (
               <div onClick={save}>저장하기</div>

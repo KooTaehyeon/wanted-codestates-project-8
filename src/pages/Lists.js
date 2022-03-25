@@ -6,7 +6,6 @@ import ListBack from '../components/ListBack';
 import ListBox from '../components/ListBox';
 import { getItems, setItems } from '../util/LocalStorage';
 const Lists = ({}) => {
-  const [localData, setLocalData] = useState(getItems('item'));
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]);
   const [number, setNumber] = useState(Number(1));
@@ -31,9 +30,6 @@ const Lists = ({}) => {
   useEffect(() => {
     defaultClient();
   }, [number]);
-  setTimeout(() => {
-    setItems(localData);
-  }, localData);
 
   //무한 스크롤
   const _infiniteScroll = useCallback(() => {
@@ -71,8 +67,6 @@ const Lists = ({}) => {
           data.map((item, i) => {
             return (
               <ListBox
-                localData={localData}
-                setLocalData={setLocalData}
                 key={i}
                 item={item}
                 title={item.fcNm}

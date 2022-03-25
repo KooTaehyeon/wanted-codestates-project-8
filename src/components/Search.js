@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { getItems, setItems } from '../util/LocalStorage';
 import { useRecoilState } from 'recoil';
 import { DataState } from '../atom';
-const Search = () => {
+const Search = ({ homeData, setHomeData }) => {
   const options = [
     { value: 'name', label: '이름', key: 'title' },
     { value: 'address', label: '주소', key: 'addr' },
@@ -31,13 +31,11 @@ const Search = () => {
   const onKey = (e) => {
     if (e.key === 'Enter') {
       if (selectedOption.value === 'name') {
-        console.log('아');
         const data = searchData.filter((item) =>
           item.fcNm.includes(String(inputValue))
         );
         setSearchData(data);
       } else if (selectedOption.value === 'address') {
-        console.log('오냐');
         const data = searchData.filter((item) =>
           item.fcAddr.includes(String(inputValue))
         );
@@ -51,24 +49,20 @@ const Search = () => {
     }
     setHomeTrue(!homeTrue);
   };
-  // 필터용
-  setTimeout(() => {
-    setItems(searchData);
-  }, searchData);
+  console.log(searchData);
+
   const ReSet = () => {
     // input 값 지우는 이벤트
     setInputValue('');
-    setItems(reData);
-    setSearchData(getItems('item'));
+    // setItems(reData);
+    // setSearchData(getItems('item'));
     setHomeTrue(!homeTrue);
   };
   // 리셋(되돌리기)용 데이터
-  useEffect(() => {
-    setReData(searchData);
-  }, []);
-
-  console.log(searchData);
-  console.log(reData, '리셋용');
+  // useEffect(() => {
+  //   setReData(searchData);
+  // }, []);
+  // console.log(reData);
 
   return (
     <Box>
