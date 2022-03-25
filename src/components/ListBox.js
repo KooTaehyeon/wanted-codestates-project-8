@@ -6,42 +6,39 @@ const ListBox = ({
   localData,
   setLocalData,
   item,
-  title,
-  addr,
-  tel,
-  memo,
   homeData,
   setHomeData,
+  setHomeTrue,
 }) => {
   const [modalCk, setModelCk] = useState(false);
+  const [istrue, setIstrue] = useState(false);
+
   const modelClick = (e) => {
     if (!modalCk) {
       setModelCk(true);
     } else {
       setModelCk(false);
     }
+    if (item.text) {
+      setIstrue(true);
+    }
   };
   return (
     <>
       <ListLi onClick={modelClick}>
-        <p>{title}</p>
-        <p>{addr}</p>
-        <p>{tel}</p>
-        <Messsage>{memo}</Messsage>
+        <p>{item.fcNm}</p>
+        <p>{item.fcAddr}</p>
+        <p>{item.ref1}</p>
+        <Messsage>{item.text}</Messsage>
       </ListLi>
       {modalCk ? (
         <Modal
-          localData={localData}
-          setLocalData={setLocalData}
           setHomeData={setHomeData}
           homeData={homeData}
           item={item}
           modalCk={modalCk}
           setModelCk={setModelCk}
-          title={title}
-          addr={addr}
-          tel={tel}
-          memo={memo}
+          istrue={istrue}
         />
       ) : null}
     </>

@@ -3,23 +3,31 @@ import styled from 'styled-components';
 import Search from '../components/Search';
 import ListPlus from '../components/ListPlus';
 import { Link } from 'react-router-dom';
-import { getItems } from '../util/LocalStorage';
+import { getItems, setItems } from '../util/LocalStorage';
 import { useRecoilState } from 'recoil';
-import { DataState } from '../atom';
+import { DataState, modalDatas } from '../atom';
 import Modal from '../components/Modal';
 import ListBox from '../components/ListBox';
 const Home = () => {
   const [homeTrue, setHomeTrue] = useRecoilState(DataState);
   const [homeData, setHomeData] = useState([]);
+  const [modalData, setModalData] = useRecoilState(modalDatas);
 
-  console.log(homeTrue);
   useEffect(() => {
-    setHomeData(getItems('item'));
-  }, [homeTrue]);
+    const test = getItems('item');
+    if (homeData) {
+      setHomeData(test);
+    } else {
+      setHomeData([]);
+    }
+  }, [modalData]);
+  console.log(modalData);
+
   console.log(homeData, 'home');
+
   return (
     <>
-      <Search />
+      <Search homeData={homeData} />
       <ListUl>
         {homeData ? (
           homeData.map((item, i) => {
@@ -27,14 +35,8 @@ const Home = () => {
               <ListBox
                 homeData={homeData}
                 setHomeData={setHomeData}
-                localData={homeData}
-                setLocalData={setHomeTrue}
                 key={i}
                 item={item}
-                title={item.fcNm}
-                addr={item.fcAddr}
-                tel={item.ref1}
-                memo={item.contents}
               />
               // <ListLi key={i} onClick={modelClick}>
               //   <p>{item.fcNm}</p>
