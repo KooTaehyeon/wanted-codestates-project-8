@@ -2,14 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
 
-const ListBox = ({
-  localData,
-  setLocalData,
-  item,
-  homeData,
-  setHomeData,
-  setHomeTrue,
-}) => {
+const ListBox = ({ item, homeData, setHomeData, setHomeTrue }) => {
   const [modalCk, setModelCk] = useState(false);
   const [istrue, setIstrue] = useState(false);
 
