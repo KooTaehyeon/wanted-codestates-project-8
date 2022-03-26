@@ -70,6 +70,9 @@ const ListLi = styled.li`
     font-weight: bold;
     margin-bottom: 14px;
   }
+  :hover {
+    border: 2px solid #00aaff;
+  }
 `;
 const Messsage = styled.p`
   display: inline-block;
