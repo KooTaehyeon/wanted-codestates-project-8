@@ -7,6 +7,7 @@ import ListBox from '../components/ListBox';
 import Feedback from '../components/Feedback';
 import { useRecoilState } from 'recoil';
 import { bool } from '../atoms';
+import img from '../img/image.png';
 const Home = () => {
   const [homeData, setHomeData] = useState([]);
 
@@ -117,7 +118,10 @@ const Home = () => {
             );
           })
         ) : (
-          <div>저장된 데이터가 없습니다</div>
+          <>
+            <img src={img}></img>
+            <div>저장된 데이터가 없습니다</div>
+          </>
         )}
       </ListUl>
       <Link to='/List'>
@@ -130,6 +134,12 @@ const Home = () => {
 const ListUl = styled.ul`
   div {
     text-align: center;
+  }
+  img {
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    padding: 30px;
   }
 `;
 

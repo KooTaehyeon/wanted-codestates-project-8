@@ -9,6 +9,7 @@ const ListBox = ({
   setTextCk,
   setFeadCk,
   height,
+  memo,
 }) => {
   const [modalCk, setModelCk] = useState(false);
   const [istrue, setIstrue] = useState(false);
@@ -29,7 +30,10 @@ const ListBox = ({
         <p>{item.fcNm}</p>
         <p>{item.fcAddr}</p>
         <p>{item.ref1}</p>
-        <Messsage>{item.text}</Messsage>
+        <Messsage>
+          {item.text}
+          {memo}
+        </Messsage>
       </ListLi>
       {modalCk ? (
         <Modal
@@ -48,6 +52,7 @@ const ListBox = ({
 };
 const ListLi = styled.li`
   max-width: 400px;
+  width: 100%;
   border-radius: 6px;
   padding: 21px;
   margin: 20px auto;

@@ -76,9 +76,9 @@ const Lists = ({}) => {
                 title={item.fcNm}
                 addr={item.fcAddr}
                 tel={item.ref1}
-                memo={item.contents}
+                memo={'클릭하시면 메모 하실 수 있어요'}
                 setTextCk={setTextCk}
-                height={190}
+                height={220}
               />
             );
           })}
