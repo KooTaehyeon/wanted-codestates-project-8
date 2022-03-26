@@ -78,7 +78,7 @@ const Lists = ({}) => {
                 tel={item.ref1}
                 memo={'클릭하시면 메모 하실 수 있어요'}
                 setTextCk={setTextCk}
-                height={220}
+                height={230}
               />
             );
           })}

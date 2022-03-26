@@ -65,6 +65,7 @@
 │   ├── components/              - page components
 │   ├── pages/                   - rendering pages
 │   ├── util/                    - LocalStorage
+│   └── img/                     - img 모음
 │
 ├── App.js                       - page rendering
 ├── index.js                     - entry point

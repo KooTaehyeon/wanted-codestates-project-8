@@ -22,6 +22,18 @@ const App = () => {
 const AppBox = styled.div`
   width: 28%;
   margin: auto;
+  @media screen and (max-width: 1280px) {
+    width: 30%;
+    margin: auto;
+  }
+  @media screen and (max-width: 800px) {
+    width: 39%;
+    margin: auto;
+  }
+  @media screen and (max-width: 500px) {
+    width: 59%;
+    margin: auto;
+  }
 `;
 
 export default App;

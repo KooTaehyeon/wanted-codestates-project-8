@@ -89,7 +89,7 @@ const Home = () => {
             onChange={inputChange}
             value={inputValue}
             onKeyPress={onKey}
-          />
+          ></InputBox>
           <InputRemove onClick={ReSet}>
             {' '}
             <i className='fas fa-undo'></i>
@@ -152,7 +152,6 @@ const ListUl = styled.ul`
 const Box = styled.nav`
   display: flex;
   margin: 20px;
-  position: relative;
 `;
 const SelectBox = styled.select`
   width: 88px;
@@ -180,6 +179,12 @@ const InputRemove = styled.div`
   padding-top: 5px;
   float: right;
   cursor: pointer;
+  position: relative;
+  @media screen and (max-width: 1080px) {
+    float: none;
+    top: -32px;
+    left: 90%;
+  }
 `;
 
 export default Home;
