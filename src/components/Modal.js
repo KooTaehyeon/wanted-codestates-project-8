@@ -40,7 +40,6 @@ const Modal = ({
     if (!editMessage) {
       setFeadCks(!feedCk);
       setTimeout(() => {
-        console.log('실행');
         setFeadCks(false);
       }, 2000);
       return;
@@ -52,21 +51,18 @@ const Modal = ({
       }
       // 메모 저장
       if (myDatas) {
-        console.log('home', myDatas);
         const saveData = [
           ...myDatas,
           { ...item, id: Date.now(), text: editMessage },
         ];
         setItems(saveData);
       } else {
-        console.log('home', myDatas);
         const saveData = [{ ...item, id: Date.now(), text: editMessage }];
         setItems(saveData);
       }
       setTextCk(3);
       setFeadCks(true);
       setTimeout(() => {
-        console.log('실행');
         setFeadCks(false);
       }, 2000);
     }
@@ -92,7 +88,6 @@ const Modal = ({
         setTextCk(1);
         setFeadCks(true);
         setTimeout(() => {
-          console.log('실행');
           setFeadCks(false);
         }, 2000);
       }
@@ -107,7 +102,6 @@ const Modal = ({
         setTextCk(2);
         setFeadCks(true);
         setTimeout(() => {
-          console.log('실행');
           setFeadCks(false);
         }, 2000);
       }
@@ -187,9 +181,9 @@ const ModalBox = styled.div`
     font-size: 18px;
     cursor: pointer;
     display: inline-box;
-    border: 1px solid blue;
+    border: 1px solid #00aaff;
     padding: 10px;
-    background: blue;
+    background: #00aaff;
     color: #fff;
   }
   li {

@@ -63,7 +63,6 @@ const Home = () => {
         }
       }
     };
-    console.log(searchData, '서치');
 
     const ReSet = () => {
       // input 값 지우는 이벤트
@@ -101,7 +100,6 @@ const Home = () => {
   //  피드백 박스
   let [textCk, setTextCk] = useState(1);
   const [feedCk, setFeadCks] = useRecoilState(bool);
-  console.log(textCk);
   return (
     <>
       <Search />

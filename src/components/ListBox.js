@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Modal from './Modal';
 
-const ListBox = ({ item, homeData, setHomeData, setTextCk, setFeadCk }) => {
+const ListBox = ({
+  item,
+  homeData,
+  setHomeData,
+  setTextCk,
+  setFeadCk,
+  height,
+}) => {
   const [modalCk, setModelCk] = useState(false);
   const [istrue, setIstrue] = useState(false);
 
@@ -18,7 +25,7 @@ const ListBox = ({ item, homeData, setHomeData, setTextCk, setFeadCk }) => {
   };
   return (
     <>
-      <ListLi onClick={modelClick}>
+      <ListLi onClick={modelClick} height={height}>
         <p>{item.fcNm}</p>
         <p>{item.fcAddr}</p>
         <p>{item.ref1}</p>
@@ -40,7 +47,7 @@ const ListBox = ({ item, homeData, setHomeData, setTextCk, setFeadCk }) => {
   );
 };
 const ListLi = styled.li`
-  max-width: 388px;
+  max-width: 400px;
   border-radius: 6px;
   padding: 21px;
   margin: 20px auto;
@@ -49,6 +56,7 @@ const ListLi = styled.li`
   color: rgb(0, 0, 0);
   transition: all 0.3s ease 0s;
   cursor: pointer;
+  height: ${(props) => props.height}px;
   & p {
     line-height: 1.5;
   }
@@ -62,7 +70,7 @@ const Messsage = styled.p`
   display: inline-block;
   max-width: 360px;
   margin-top: 18px;
-  color: blue;
+  color: #00aaff;
   font-weight: bold;
   font-size: 16px;
   text-overflow: ellipsis;

@@ -55,7 +55,7 @@ const Lists = ({}) => {
       setData([...data, ...result]);
     }
   }, [data]);
-  console.log(number);
+
   useEffect(() => {
     window.addEventListener('scroll', _infiniteScroll, true);
     return () => window.removeEventListener('scroll', _infiniteScroll, true);
@@ -78,6 +78,7 @@ const Lists = ({}) => {
                 tel={item.ref1}
                 memo={item.contents}
                 setTextCk={setTextCk}
+                height={190}
               />
             );
           })}

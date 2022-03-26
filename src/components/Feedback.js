@@ -7,7 +7,7 @@ const Feedback = ({ textCk, feedCk }) => {
     '삭제되었습니다',
     '저장되었습니다',
   ];
-  console.log(feedCk);
+
   return (
     <FeedbackBox style={!feedCk ? { display: 'none' } : { display: 'block' }}>
       {faadText[textCk]}
@@ -19,10 +19,11 @@ const FeedbackBox = styled.div`
   position: fixed;
   top: 5%;
   left: 42%;
-  border: 1px solid blue;
+  border: 1px solid #00aaff;
+  border-radius: 5px;
   width: 200px;
   height: 30px;
-  background-color: blue;
+  background-color: #00aaff;
   color: #fff;
   z-index: 10;
   padding: 30px;
