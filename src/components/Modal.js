@@ -39,6 +39,7 @@ const Modal = ({
     // 빈값이면 리턴
     if (!editMessage) {
       setFeadCks(!feedCk);
+      setTextCk(0);
       setTimeout(() => {
         setFeadCks(false);
       }, 2000);

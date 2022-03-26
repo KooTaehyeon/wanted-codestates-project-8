@@ -131,6 +131,12 @@ const Home = () => {
     </>
   );
 };
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+`;
 const ListUl = styled.ul`
   div {
     text-align: center;
