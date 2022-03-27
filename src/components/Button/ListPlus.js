@@ -5,7 +5,7 @@ const ListPlus = ({ LinkBool, ListLink }) => {
   return (
     <Buttons>
       {LinkBool ? <i className='fas fa-plus-circle fa-3x' /> : null}
-      <i className='fas fa-arrow-alt-circle-up fa-3x' />
+      {ListLink ? <i className='fas fa-arrow-alt-circle-up fa-3x' /> : null}
     </Buttons>
   );
 };
