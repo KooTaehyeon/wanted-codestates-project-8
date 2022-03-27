@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListPlus from '../components/ListPlus';
 import { Link } from 'react-router-dom';
-import { getItems, setItems } from '../util/LocalStorage';
+import { getItems } from '../util/LocalStorage';
 import ListBox from '../components/ListBox';
 import Feedback from '../components/Feedback';
 import { useRecoilState } from 'recoil';
@@ -37,9 +37,8 @@ const Home = () => {
       const { value } = e.target;
       setSelectedOption(options[Number(value)]);
     };
-    /// 셀렉트존
+    /// input값
     const [inputValue, setInputValue] = useState(''); // input 값 상태
-
     const inputChange = (e) => {
       // input값 바꿔주는 이벤트
       setInputValue(e.target.value);
@@ -47,19 +46,28 @@ const Home = () => {
     const onKey = (e) => {
       if (e.key === 'Enter') {
         if (selectedOption.value === 'name') {
-          const data = homeData.filter((item) =>
-            item.fcNm.includes(String(inputValue))
-          );
+          const data = homeData.map((item) => {
+            if (!item.fcNm.includes(String(inputValue))) {
+              item.bool = true;
+            }
+            return item;
+          });
           setHomeData(data);
         } else if (selectedOption.value === 'address') {
-          const data = homeData.filter((item) =>
-            item.fcAddr.includes(String(inputValue))
-          );
+          const data = homeData.map((item) => {
+            if (!item.fcAddr.includes(String(inputValue))) {
+              item.bool = true;
+            }
+            return item;
+          });
           setHomeData(data);
         } else if (selectedOption.value === 'memo') {
-          const data = homeData.filter((item) =>
-            item.contents.includes(String(inputValue))
-          );
+          const data = homeData.map((item) => {
+            if (!item.contents.includes(String(inputValue))) {
+              item.bool = true;
+            }
+            return item;
+          });
           setHomeData(data);
         }
       }
@@ -68,7 +76,14 @@ const Home = () => {
     const ReSet = () => {
       // input 값 지우는 이벤트
       setInputValue('');
-      setHomeData(getItems('item'));
+      const getReSet = getItems('item');
+      const data = getReSet.map((item) => {
+        if (item.bool === true) {
+          item.bool = false;
+        }
+        return item;
+      });
+      setHomeData(data);
     };
 
     return (
@@ -101,6 +116,7 @@ const Home = () => {
   //  피드백 박스
   let [textCk, setTextCk] = useState(1);
   const [feedCk, setFeadCks] = useRecoilState(bool);
+
   return (
     <>
       <Search />
@@ -108,13 +124,22 @@ const Home = () => {
         {homeData ? (
           homeData.map((item, i) => {
             return (
-              <ListBox
-                homeData={homeData}
-                setHomeData={setHomeData}
+              <div
                 key={i}
-                item={item}
-                setTextCk={setTextCk}
-              />
+                style={
+                  item.bool === false
+                    ? { display: 'block' }
+                    : { display: 'none' }
+                }
+              >
+                <ListBox
+                  homeData={homeData}
+                  setHomeData={setHomeData}
+                  item={item}
+                  setTextCk={setTextCk}
+                  dispaly={item.bool}
+                />
+              </div>
             );
           })
         ) : (

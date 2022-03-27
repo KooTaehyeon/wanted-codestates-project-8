@@ -13,7 +13,7 @@ const ListBox = ({
 }) => {
   const [modalCk, setModelCk] = useState(false);
   const [istrue, setIstrue] = useState(false);
-
+  const bools = item.bool;
   const modelClick = (e) => {
     if (!modalCk) {
       setModelCk(true);

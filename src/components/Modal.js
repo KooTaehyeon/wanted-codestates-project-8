@@ -18,6 +18,7 @@ const Modal = ({
   let textCk = 0;
   const [myDatas, setMyDatas] = useState([]);
   const [feedCk, setFeadCks] = useRecoilState(bool);
+  const [bools, setBools] = useState(false);
   useEffect(() => {
     const data = getItems('item');
     if (data) {
@@ -54,11 +55,13 @@ const Modal = ({
       if (myDatas) {
         const saveData = [
           ...myDatas,
-          { ...item, id: Date.now(), text: editMessage },
+          { ...item, id: Date.now(), text: editMessage, bool: bools },
         ];
         setItems(saveData);
       } else {
-        const saveData = [{ ...item, id: Date.now(), text: editMessage }];
+        const saveData = [
+          { ...item, id: Date.now(), text: editMessage, bool: bools },
+        ];
         setItems(saveData);
       }
       setTextCk(3);
