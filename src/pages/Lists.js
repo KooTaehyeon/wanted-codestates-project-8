@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import ListBack from '../components/ListBack';
+import ListBack from '../components/Button/ListBack';
 import ListBox from '../components/ListBox';
 import { useRecoilState } from 'recoil';
 import { bool, numbers } from '../atoms';
 import Feedback from '../components/Feedback';
+import ListPlus from '../components/Button/ListPlus';
 const Lists = ({}) => {
   const [data, setData] = useState([]);
   const [result, setResult] = useState([]);
   const [number, setNumber] = useState(Number(1));
   let [textCk, setTextCk] = useState(3);
   const [feedCk, setFeadCks] = useRecoilState(bool);
-
+  const ListLink = true;
   const defaultClient = () => {
     axios
       .get(
@@ -34,6 +35,11 @@ const Lists = ({}) => {
   useEffect(() => {
     defaultClient();
   }, [number]);
+  // 스크롤 이벤트
+  const getRef = useRef(null);
+  const linkClick = () => {
+    getRef.current.scrollIntoView({ behavior: 'smooth' });
+  };
 
   //무한 스크롤
   const _infiniteScroll = useCallback(() => {
@@ -63,7 +69,7 @@ const Lists = ({}) => {
 
   return (
     <>
-      <Link to='/'>
+      <Link to='/' ref={getRef}>
         <ListBack />
       </Link>
       <ListUl>
@@ -83,6 +89,9 @@ const Lists = ({}) => {
             );
           })}
       </ListUl>
+      <div onClick={linkClick}>
+        <ListPlus ListLink={ListLink} />
+      </div>
       <Feedback textCk={textCk} feedCk={feedCk} />
     </>
   );

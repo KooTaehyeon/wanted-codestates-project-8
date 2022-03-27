@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ListPlus from '../components/ListPlus';
+import ListPlus from '../components/Button/ListPlus';
 import { Link } from 'react-router-dom';
 import { getItems } from '../util/LocalStorage';
 import ListBox from '../components/ListBox';
@@ -116,7 +116,8 @@ const Home = () => {
   //  피드백 박스
   let [textCk, setTextCk] = useState(1);
   const [feedCk, setFeadCks] = useRecoilState(bool);
-
+  // Link btn
+  const LinkBool = true;
   return (
     <>
       <Search />
@@ -150,7 +151,7 @@ const Home = () => {
         )}
       </ListUl>
       <Link to='/List'>
-        <ListPlus />
+        <ListPlus LinkBool={LinkBool} />
       </Link>
       <Feedback textCk={textCk} feedCk={feedCk} />
     </>
