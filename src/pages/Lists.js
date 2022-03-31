@@ -17,9 +17,7 @@ const Lists = ({}) => {
   const ListLink = true;
   const defaultClient = () => {
     axios
-      .get(
-        `https://www.chungbuk.go.kr/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`
-      )
+      .get(`chungbuk/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`)
       .then((res) => {
         const datas = res.data;
         if (number === 1) {
