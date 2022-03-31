@@ -8,7 +8,8 @@
 
 ### Stack
 
-`Javascript` `React` `Styled-Components` `recoil` `axios`
+`Javascript` `React` `Styled-Components` `recoil` `axios`  
+` http-proxy-middleware`
 
 #### ✅ 더블엔씨
 
