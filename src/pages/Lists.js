@@ -18,7 +18,10 @@ const Lists = ({}) => {
 
   const defaultClient = () => {
     axios
-      .get(`/chungbuk/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`)
+      .get(
+        process.env.REACT_APP_DB_HOST +
+          `/chungbuk/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`
+      )
       .then((res) => {
         const datas = res.data;
         if (number === 1) {
