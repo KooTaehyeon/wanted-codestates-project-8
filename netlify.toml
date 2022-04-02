@@ -1,9 +1,5 @@
+
 [[redirects]]
   from = "/chungbuk/*"
-  to = "http://apis.data.go.kr/6430000/cbRecreationalForestInfoService/:splat"
+  to = "https://www.chungbuk.go.kr/:splat"
   status = 200
-  
-[[redirects]]
-trom = "/"
-to = "/index.html/"
-status =200
