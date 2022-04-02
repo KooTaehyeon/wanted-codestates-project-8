@@ -15,7 +15,7 @@ const Lists = ({}) => {
   let [textCk, setTextCk] = useState(3);
   const [feedCk, setFeadCks] = useRecoilState(bool);
   const ListLink = true;
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
+  const PROXY = window.location.hostname === 'localhost' ? '' : '/chungbuk';
   const defaultClient = () => {
     axios
       .get(`${PROXY}/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`)
