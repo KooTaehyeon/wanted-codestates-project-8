@@ -1,5 +1,5 @@
 {
-  "name": "wanted-codestates-project-taehyeon",
+  "name": "wanted-codestates-project-8",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -42,5 +42,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "https://spontaneous-concha-7b9b75.netlify.app/"
 }

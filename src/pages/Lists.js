@@ -15,11 +15,10 @@ const Lists = ({}) => {
   let [textCk, setTextCk] = useState(3);
   const [feedCk, setFeadCks] = useRecoilState(bool);
   const ListLink = true;
-  const PROXY = window.location.hostname === 'localhost' ? '' : '/proxy';
-  const URL = `${PROXY}/chungbuk/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`;
+
   const defaultClient = () => {
     axios
-      .get(`${URL}`)
+      .get(`/chungbuk/openapi-json/pubdata/pubMapForest.do?pageNo=${number}`)
       .then((res) => {
         const datas = res.data;
         if (number === 1) {
