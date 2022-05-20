@@ -1,4 +1,4 @@
-# 🏦 더블엔씨 | wanted-codestates-project-8
+# 🏦 휴양림api 사이트 | wanted-codestates-project-8
 
 <br/>
 <a href="https://spontaneous-concha-7b9b75.netlify.app/
@@ -11,7 +11,7 @@
 `Javascript` `React` `Styled-Components` `recoil` `axios`  
 ` http-proxy-middleware`
 
-#### ✅ 더블엔씨
+
 
 1. 검색기능
 
